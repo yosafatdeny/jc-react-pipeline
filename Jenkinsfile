@@ -56,8 +56,7 @@ pipeline {
         }
         stage('Clean up image'){
             steps{
-                sh 'docker rmi hisbu/reactapp-test'Push image to registry
-
+                sh 'docker rmi hisbu/reactapp-test'
             }
         }
     }
