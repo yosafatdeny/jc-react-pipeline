@@ -65,7 +65,7 @@ pipeline {
                 kubernetesDeploy(
                     kubeConfigId: 'kubeconfig',
                     configs: 'reactapp-deployment.yml',
-                    enableConfigSubstitusion: true
+                    enableConfigSubstitution: true
                 )
             }
         }
