@@ -14,9 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'start build'
-                // nodejs('node'){
-                    sh 'npm install'
-                // }
+                sh 'npm install'
             }
         }
         stage('Test') {
@@ -29,10 +27,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Test docker image') {
+        stage('Build Docker image') {
             steps{
-                sh 'docker run -d --rm --name testImages -p 80:80 hisbu/webapps-test'
-                input message: 'Finished test image? (Click "Proceed" to Continue'
+                script {
+                    app = docker.build("hisbu/reactapp-test")
+                }
             }
         }
     }
