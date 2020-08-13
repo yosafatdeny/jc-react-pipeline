@@ -59,5 +59,15 @@ pipeline {
                 sh 'docker rmi hisbu/reactapp-test'
             }
         }
+        stage('Deployment to Production'){
+            steps{
+                milestone(1)
+                kubernetesDeploy(
+                    kubeConfigId: 'kubeconfig',
+                    config: 'reactapp-deployment.yml',
+                    enableConfigSubstitusion: true
+                )
+            }
+        }
     }
 }
