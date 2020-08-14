@@ -59,15 +59,23 @@ pipeline {
                 sh 'docker rmi hisbu/reactapp-test'
             }
         }
-        stage('Deployment to Production'){
+        stage('Deploy to Kubernetes'){
             steps{
-                milestone(1)
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'reactapp-deployment.yml',
-                    enableConfigSubstitution: true
-                )
+                sshagent(['kubeAccess']) {
+                    sh "scp -o StricHostKeyChecking=no reactapp-deployment.yml hisbu@34.71.135.171:/home/hisbu/reactapp/"
+                    sh "ssh hisbu@34.71.135.171 sudo kubectl apply -f reactapp/."
+                }
             }
         }
+        // stage('Deployment to Production'){
+        //     steps{
+        //         milestone(1)
+        //         kubernetesDeploy(
+        //             kubeconfigId: 'kubeconfig',
+        //             configs: 'reactapp-deployment.yml',
+        //             enableConfigSubstitution: true
+        //         )
+        //     }
+        // }
     }
 }
