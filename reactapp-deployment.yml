@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-app
+  name: react-app2
   labels:
-    name: react-app
+    name: react-app2
 spec:
   replicas: 3
   selector:
     matchLabels:
-      name: react-app
+      name: react-app2
   template:
     metadata:
-      name: react-app
+      name: react-app2
       labels:
-        name: react-app
+        name: react-app2
     spec:
       containers:
-        - name: react-app
+        - name: react-app2
           image: hisbu/reactapp-test:tagVersion
           ports: 
             - containerPort: 80
@@ -26,11 +26,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-app-service
+  name: react-app2-service
 spec:
   type: NodePort
   selector:
-    name: react-app
+    name: react-app2
   ports:
     - port: 3000
       targetPort: 80
