@@ -67,7 +67,7 @@ pipeline {
                 sh "./changeTag.sh ${DOCKER_TAG}"
                 sshagent(['kubeAccess']) {
                     sh "scp -o StrictHostKeyChecking=no reactapp-config-k8s.yml hisbu@35.247.151.81:/home/hisbu/reactapp/"
-                    sh "ssh hisbu@34.71.135.171 sudo kubectl apply -f reactapp/."
+                    sh "ssh hisbu@35.247.151.81 sudo kubectl apply -f reactapp/."
                 }
             }
         }
