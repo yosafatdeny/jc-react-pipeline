@@ -9,6 +9,7 @@ pipeline {
     agent any
     environment {
         CI = 'true'
+        DOCKER_TAG = getDockerTag()
     }
     stages {
         stage('Build') {
@@ -49,7 +50,8 @@ pipeline {
             steps{
                 script{
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerHub'){
-                        app.push()
+                        app.push("${DOCKER_TAG}")
+                        app.push("latest")
                     }
                 }
             }
@@ -61,8 +63,10 @@ pipeline {
         }
         stage('Deploy to Kubernetes'){
             steps{
+                sh "chmod +x changeTag.sh"
+                sh "./changeTag.sh ${DOCKER_TAG}"
                 sshagent(['kubeAccess']) {
-                    sh "scp -o StrictHostKeyChecking=no reactapp-deployment.yml hisbu@34.71.135.171:/home/hisbu/reactapp/"
+                    sh "scp -o StrictHostKeyChecking=no reactapp-config-k8s.yml hisbu@34.71.135.171:/home/hisbu/reactapp/"
                     sh "ssh hisbu@34.71.135.171 sudo kubectl apply -f reactapp/."
                 }
             }
@@ -78,4 +82,9 @@ pipeline {
         //     }
         // }
     }
+}
+
+def getDockerTag(){
+    def tag = sh script: "git rev-parse HEAD", returnStdout: true
+    return tag
 }
