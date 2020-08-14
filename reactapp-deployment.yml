@@ -19,7 +19,7 @@ spec:
         - name: react-app
           image: hisbu/reactapp-test
           ports: 
-            - containerPort: 3000
+            - containerPort: 80
 
 ---
 
@@ -33,7 +33,7 @@ spec:
     name: react-app
   ports:
     - port: 3000
-      targetPort: 3000
-      nodePort: 300001
+      targetPort: 80
+      nodePort: 30001
     
     

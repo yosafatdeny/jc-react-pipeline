@@ -62,7 +62,7 @@ pipeline {
         stage('Deploy to Kubernetes'){
             steps{
                 sshagent(['kubeAccess']) {
-                    sh "scp -o StricHostKeyChecking=no reactapp-deployment.yml hisbu@34.71.135.171:/home/hisbu/reactapp/"
+                    sh "scp -o StrictHostKeyChecking=no reactapp-deployment.yml hisbu@34.71.135.171:/home/hisbu/reactapp/"
                     sh "ssh hisbu@34.71.135.171 sudo kubectl apply -f reactapp/."
                 }
             }
