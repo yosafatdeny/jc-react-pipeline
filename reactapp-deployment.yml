@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-app2
+  name: react-app
   labels:
-    name: react-app2
+    name: react-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      name: react-app2
+      name: react-app
   template:
     metadata:
-      name: react-app2
+      name: react-app
       labels:
-        name: react-app2
+        name: react-app
     spec:
       containers:
-        - name: react-app2
-          image: hisbu/reactapp-test:tagVersion
+        - name: react-app
+          image: yosafatdeny/reactapp-jcde:tagVersion
           ports: 
             - containerPort: 80
 
@@ -26,14 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-app2-service
+  name: react-app-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
-    name: react-app2
+    name: react-app
   ports:
     - port: 3000
       targetPort: 80
-      nodePort: 30010
     
     
