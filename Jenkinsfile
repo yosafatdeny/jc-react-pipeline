@@ -70,7 +70,8 @@ pipeline {
     //stage delapan
     stage ('clean up docker images'){
       steps{    
-        sh 'docker rmi yosafatdeny/react-jcde'    
+        sh 'docker rmi yosafatdeny/react-jcde:latest'  
+        sh "docker rmi yosafatdeny/react-jcde:'$(DOCKER_TAG)'"          
       }    
     }                 
   }      
