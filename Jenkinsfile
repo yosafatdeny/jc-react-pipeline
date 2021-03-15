@@ -68,19 +68,18 @@ pipeline {
     }  
 
     //stage delapan
-    stage ("clean up docker images"){
+    stage ('clean up docker images'){
       steps{    
-        sh 'docker rmi registry.hub.docker.com/yosafatdeny/react-jcde:latest'
-        // sh "docker rmi registry.hub.docker.com/yosafatdeny/react-jcde:'$(DOCKER_TAG)'"          
+        sh 'docker rmi registry.hub.docker.com/yosafatdeny/react-jcde:latest'    
       }    
-    }  
+    } 
 
     //stage sembilan
     stage ('deploy app to kubernetes cluster'){
       steps{    
         sh "chmod +x changeTag.sh"
         sh "./changeTag.sh $(DOCKER_TAG)"
-        withkubConfig([credentialsId: 'kubeconfig-clusterjcde', serverUrl: 'https://34.101.152.59']){
+        withkubeConfig([credentialsId: 'kubeconfig-clusterjcde', serverUrl: 'https://34.101.152.59']){
           sh 'kubectl apply -f reactapp-config.k8s.yaml'    
         }      
       }    
