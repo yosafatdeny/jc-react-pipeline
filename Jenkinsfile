@@ -44,7 +44,7 @@ pipeline {
     stage ('test docker images'){
       steps{    
         sh 'docker run -d --rm --name testimage -p 8081:80 yosafatdeny/reactapp-jcde'   
-        input message: "Finished test image? (Click procced to continue)"
+        //input message: "Finished test image? (Click procced to continue)"
       }      
     } 
 
@@ -79,7 +79,7 @@ pipeline {
       steps{    
         sh "chmod +x changeTag.sh"
         sh "./changeTag.sh ${DOCKER_TAG}"
-        withkubeConfig([credentialsId: 'kubeconfig-clusterjcde', serverUrl: 'https://34.101.152.59']){
+        withKubeConfig([credentialsId: 'kubeconfig-clusterjcde', serverUrl: 'https://34.101.152.59']){
           sh 'kubectl apply -f reactapp-config.k8s.yaml'    
         }      
       }    
