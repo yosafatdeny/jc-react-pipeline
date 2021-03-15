@@ -5,7 +5,7 @@ pipeline {
     CI = true
   }
 
-  stage {
+  stages {
     
     stage ('Install Dependencies react project'){
       steps{
