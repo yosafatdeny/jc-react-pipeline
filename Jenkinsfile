@@ -59,7 +59,7 @@ pipeline {
     stage ('push image to registry'){
       steps{    
         script{
-          dockerwithRegistry("https://registry.hub.docker.com", "dockerhub-yosafatdeny"){
+          docker.withRegistry("https://registry.hub.docker.com", "dockerhub-yosafatdeny"){
             app.push("${DOCKER_TAG}")
             app.push("latest")    
           }    
