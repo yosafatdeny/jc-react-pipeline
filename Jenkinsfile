@@ -23,10 +23,20 @@ pipeline {
       }
     } 
 
+    //stage tiga
     stage ('Build react project'){
       steps{    
         sh 'npm run build'
       }
-    }        
+    } 
+
+    //stage empat
+    stage ('Build docker images'){
+      steps{    
+        script {
+          app = docker.build("yosafatdeny/reactapp-jcde")    
+        }    
+      }
+    }           
   }      
 }
