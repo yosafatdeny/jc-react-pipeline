@@ -1,9 +1,10 @@
 pipeline {
   agent any
 
-//   environment{
-//     CI = true
-//   }
+  environment{
+    // CI = true
+    DOCKER_TAG = getDockerTag()
+  }
 
   stages {
     
@@ -52,6 +53,30 @@ pipeline {
       steps{    
         sh 'docker stop testimage'    
       }    
-    }              
+    }   
+
+    //stage tujuh
+    stage ('push image to registry'){
+      steps{    
+        script{
+          dockerwithRegistry("https://registry.hub.docker.com", "dockerhub-yosafatdeny"){
+            app.push("${DOCKER_TAG}")
+            app.push("latest")    
+          }    
+        }    
+      }    
+    }  
+
+    //stage delapan
+    stage ('clean up docker images'){
+      steps{    
+        sh 'docker rmi yosafatdeny/react-jcde'    
+      }    
+    }                 
   }      
+}
+
+def getDockerTag(){
+  def tag = sh script: "git rev-parse HEAD", returnStdout: true
+  return tag    
 }
