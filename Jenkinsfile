@@ -78,7 +78,7 @@ pipeline {
     stage ('deploy app to kubernetes cluster'){
       steps{    
         sh "chmod +x changeTag.sh"
-        sh "./changeTag.sh $(DOCKER_TAG)"
+        sh "./changeTag.sh ${DOCKER_TAG}"
         withkubeConfig([credentialsId: 'kubeconfig-clusterjcde', serverUrl: 'https://34.101.152.59']){
           sh 'kubectl apply -f reactapp-config.k8s.yaml'    
         }      
