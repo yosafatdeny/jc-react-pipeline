@@ -13,6 +13,13 @@ pipeline {
         sh "npm install"
       }
     }
-      
+
+    //stage dua
+    stage ('Test project'){
+      steps{
+        sh 'chmod +x jenkins/scripts/test.sh'
+        sh './jenkins/scripts/test.sh'
+      }
+    }  
   }      
 }
