@@ -17,9 +17,15 @@ pipeline {
     //stage dua
     stage ('Test project'){
       steps{
-        sh 'chmod +x jenkins/scripts/test.sh'
-        sh './jenkins/scripts/test.sh'
+        // sh 'chmod +x jenkins/scripts/test.sh'
+        // sh './jenkins/scripts/test.sh'
       }
-    }  
+    } 
+     
+    stage ('Build react project'){
+      steps{    
+        sh 'npm run build'
+      }
+    }        
   }      
 }
